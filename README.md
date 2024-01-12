@@ -1,203 +1,218 @@
-# Hazelcast
-
-[![Slack](https://img.shields.io/badge/slack-chat-green.svg)](https://slack.hazelcast.com/) 
-[![javadoc](https://javadoc.io/badge2/com.hazelcast/hazelcast/latest/javadoc.svg)](https://javadoc.io/doc/com.hazelcast/hazelcast/latest)
-[![Docker pulls](https://img.shields.io/docker/pulls/hazelcast/hazelcast)](https://hub.docker.com/r/hazelcast/hazelcast)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hazelcast_hazelcast&metric=alert_status)](https://sonarcloud.io/dashboard?id=hazelcast_hazelcast)
-
-----
-
-## What is Hazelcast
-
-The world’s leading companies trust Hazelcast to modernize applications and take instant action on data in motion to create new revenue streams, mitigate risk, and operate more efficiently. Businesses use Hazelcast’s unified **real-time data platform** to process **streaming** data, enrich it with historical context and take instant action with standard or **ML/AI-driven automation** - before it is stored in a database or data lake. 
-
-Hazelcast is named in the Gartner Market Guide to Event Stream Processing and a leader in the GigaOm Radar Report for Streaming Data Platforms. To join our community of CXOs, architects and developers at brands such as Lowe’s, HSBC, JPMorgan Chase, Volvo, New York Life, and others, visit [hazelcast.com](https://hazelcast.com).
-
-## When to use Hazelcast
-
-Hazelcast provides a platform that can handle multiple types of workloads for
-building real-time applications.
-
-* Stateful data processing over streaming data or data at rest
-* Querying streaming and batch data sources directly using SQL
-* Ingesting data through a library of connectors and serving it using
-  low-latency SQL queries
-* Pushing updates to applications on events
-* Low-latency queue-based or pub-sub messaging  
-* Fast access to contextual and transactional data via caching patterns such as
-  read/write-through and write-behind
-* Distributed coordination for microservices
-* Replicating data from one region to another or between data centers in the
-  same region
-
-## Key Features
-
-* Stateful and fault-tolerant data processing and querying over data streams
-  and data at rest using SQL or dataflow API
-* A comprehensive library of connectors such as Kafka, Hadoop, S3, RDBMS, JMS
-  and many more
-* Distributed messaging using pub-sub and queues
-* Distributed, partitioned, queryable key-value store with event listeners,
-  which can also be used to store contextual data for enriching event streams
-  with low latency
-* A production-ready Raft-implementation which allows lineralizable (CP)
-  concurrency primitives such as distributed locks.
-* Tight integration for deploying machine learning models with Python to a data
-  processing pipeline
-* Cloud-native, run everywhere architecture
-* Zero-downtime operations with rolling upgrades
-* At-least-once and exactly-once processing guarantees for stream processing
-  pipelines
-* Data replication between data centers and geographic regions using WAN 
-* Microsecond performance for key-value point lookups and pub-sub
-* Unique data processing architecture results in 99.99% latency of under 10ms
-  for streaming queries with millions of events per second.
-* Client libraries in [Java](https://github.com/hazelcast/hazelcast),
- [Python](https://github.com/hazelcast/hazelcast-python-client), [Node.js](https://github.com/hazelcast/hazelcast-nodejs-client), [.NET](https://github.com/hazelcast/hazelcast-csharp-client), [C++](https://github.com/hazelcast/hazelcast-cpp-client) and [Go](https://github.com/hazelcast/hazelcast-go-client)
-
-### Operational Data Store
-
-Hazelcast provides distributed in-memory data structures which are partitioned,
-replicated and queryable. One of the main use cases for Hazelcast is for storing
-a _working set_ of data for fast querying and access. 
-
-The main data structure underlying Hazelcast, called `IMap`, is a key-value store
-which has a rich set of features, including:
-
-* Integration with [data
-  sources](https://docs.hazelcast.com/hazelcast/latest/pipelines/sources-sinks.htm)
-  for one time or continuous ingestion
-* [Read-through and
-  write-through](https://docs.hazelcast.com/hazelcast/latest/data-structures/map.html#loading-and-storing-persistent-data)
-  caching patterns
-* Indexing and querying through
-  [SQL](https://docs.hazelcast.com/hazelcast/latest/query/sql-overview.html)
-* Processing entries in place for [atomic
-  updates](https://docs.hazelcast.com/hazelcast/latest/computing/entry-processor.html)
-* [Expiring
-  items](https://docs.hazelcast.com/hazelcast/latest/data-structures/map.html#map-eviction)
-  automatically based on certain criteria like TTL or last access time
-* [Near
-  cache](https://docs.hazelcast.com/hazelcast/latest/performance/near-cache.html)
-  for caching entries on the client
-* [Listeners](https://docs.hazelcast.com/hazelcast/latest/events/object-events.html)
-  for pushing changes to clients
-* [Data Replication](https://docs.hazelcast.com/hazelcast/latest/wan/wan.html)
-  between datacenters (Enterprise version only)
-* [Persistence](https://docs.hazelcast.com/hazelcast/latest/storage/persistence.html)
-  of data on disk (Enterprise version only)
-
-Hazelcast stores data in
-[partitions](https://docs.hazelcast.com/hazelcast/latest/consistency-and-replication/replication-algorithm.html),
-which are distributed to all the nodes. You can increase the storage capacity
-by adding additional nodes, and if one of the nodes go down, the data is
-restored automatically from the backup replicas.
-
-<img src="images/replication.png"/>
-
-You can interact with maps using SQL or a programming language client of your
-choice. You can create and interact with a map as follows:
-
-```sql
-CREATE MAPPING myMap (name varchar EXTERNAL NAME "__key", age INT EXTERNAL NAME "this") 
+<div class="Box-sc-g0xbh4-0 bJMeLZ js-snippet-clipboard-copy-unpositioned" data-hpc="true"><article class="markdown-body entry-content container-lg" itemprop="text"><h1 tabindex="-1" dir="auto" class=""><a id="user-content-hazelcast" class="anchor" aria-hidden="true" tabindex="-1" href="#hazelcast"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">榛卡斯特</font></font></h1>
+<p dir="auto"><a href="https://slack.hazelcast.com/" rel="nofollow"><img src="https://camo.githubusercontent.com/77a6a3dc6b10261d8f3ce08bc6a8ef1f89b3ef2627c63a7627fd07355072f316/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f736c61636b2d636861742d677265656e2e737667" alt="松弛" data-canonical-src="https://img.shields.io/badge/slack-chat-green.svg" style="max-width: 100%;"></a>
+<a href="https://javadoc.io/doc/com.hazelcast/hazelcast/latest" rel="nofollow"><img src="https://camo.githubusercontent.com/d6485483f5a3c8c7fddff8fa2bcda5814de680fdef440e22b9c0ad8a58659abf/68747470733a2f2f6a617661646f632e696f2f6261646765322f636f6d2e68617a656c636173742f68617a656c636173742f6c61746573742f6a617661646f632e737667" alt="javadoc" data-canonical-src="https://javadoc.io/badge2/com.hazelcast/hazelcast/latest/javadoc.svg" style="max-width: 100%;"></a>
+<a href="https://hub.docker.com/r/hazelcast/hazelcast" rel="nofollow"><img src="https://camo.githubusercontent.com/8a7db941e74aac9a57596933637acda4438b768cf4572ffd66c3fa9c97c6ff18/68747470733a2f2f696d672e736869656c64732e696f2f646f636b65722f70756c6c732f68617a656c636173742f68617a656c63617374" alt="Docker 拉取" data-canonical-src="https://img.shields.io/docker/pulls/hazelcast/hazelcast" style="max-width: 100%;"></a>
+<a href="https://sonarcloud.io/dashboard?id=hazelcast_hazelcast" rel="nofollow"><img src="https://camo.githubusercontent.com/1d082ca6c476c16346eb35b320d014d06c338e8c3b3e5f8181caffda8ea68acb/68747470733a2f2f736f6e6172636c6f75642e696f2f6170692f70726f6a6563745f6261646765732f6d6561737572653f70726f6a6563743d68617a656c636173745f68617a656c63617374266d65747269633d616c6572745f737461747573" alt="质量门状态" data-canonical-src="https://sonarcloud.io/api/project_badges/measure?project=hazelcast_hazelcast&amp;metric=alert_status" style="max-width: 100%;"></a></p>
+<hr>
+<h2 tabindex="-1" dir="auto"><a id="user-content-what-is-hazelcast" class="anchor" aria-hidden="true" tabindex="-1" href="#what-is-hazelcast"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">什么是 Hazelcast</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">全球领先的公司信赖 Hazelcast 来实现应用程序现代化并对动态数据采取即时行动，以创造新的收入来源、降低风险并提高运营效率。</font><font style="vertical-align: inherit;">企业使用 Hazelcast 的统一</font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">实时数据平台</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">来处理</font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">流</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">数据，利用历史背景对其进行丰富，并</font><font style="vertical-align: inherit;">在将数据存储到数据库或数据湖之前，通过标准或</font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ML/AI 驱动的自动化采取即时行动。</font></font></strong><font style="vertical-align: inherit;"></font></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 被评为 Gartner 事件流处理市场指南，并被评为流数据平台 GigaOm Radar 报告中的领导者。</font><font style="vertical-align: inherit;">要加入由劳氏 (Lowe's)、汇丰银行 (HSBC)、摩根大通 (JPMorgan Chase)、沃尔沃 (Volvo)、纽约人寿 (New York Life) 等品牌的 CXO、建筑师和开发商组成的社区，请访问</font></font><a href="https://hazelcast.com" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">hazelcast.com</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+<h2 tabindex="-1" dir="auto"><a id="user-content-when-to-use-hazelcast" class="anchor" aria-hidden="true" tabindex="-1" href="#when-to-use-hazelcast"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">何时使用 Hazelcast</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 提供了一个可以处理多种类型的工作负载以构建实时应用程序的平台。</font></font></p>
+<ul dir="auto">
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">对流数据或静态数据进行状态数据处理</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">直接使用SQL查询流式和批量数据源</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">通过连接器库摄取数据并使用低延迟 SQL 查询提供数据</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">根据事件推送更新到应用程序</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">基于低延迟队列或发布-订阅消息传递</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">通过读/写和后写等缓存模式快速访问上下文和事务数据</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">微服务的分布式协调</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">将数据从一个区域复制到另一个区域或同一区域的数据中心之间</font></font></li>
+</ul>
+<h2 tabindex="-1" dir="auto"><a id="user-content-key-features" class="anchor" aria-hidden="true" tabindex="-1" href="#key-features"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">主要特征</font></font></h2>
+<ul dir="auto">
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">使用 SQL 或数据流 API 对数据流和静态数据进行有状态和容错的数据处理和查询</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">全面的连接器库，例如 Kafka、Hadoop、S3、RDBMS、JMS 等</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">使用发布-订阅和队列的分布式消息传递</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">具有事件侦听器的分布式、分区、可查询键值存储，还可用于存储上下文数据，以低延迟丰富事件流</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">生产就绪的 Raft 实现，允许线性化 (CP) 并发原语，例如分布式锁。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">紧密集成，用于将机器学习模型与 Python 部署到数据处理管道</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">云原生、无处不在的架构</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">通过滚动升级实现零停机操作</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">流处理管道的至少一次和恰好一次处理保证</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">使用 WAN 在数据中心和地理区域之间进行数据复制</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">键值点查找和发布-订阅的微秒级性能</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">独特的数据处理架构可实现每秒数百万个事件的流式查询的 99.99% 延迟低于 10 毫秒。</font></font></li>
+<li><font style="vertical-align: inherit;"></font><a href="https://github.com/hazelcast/hazelcast"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Java</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">、
+ </font></font><a href="https://github.com/hazelcast/hazelcast-python-client"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Python</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">、</font></font><a href="https://github.com/hazelcast/hazelcast-nodejs-client"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Node.js</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">、</font></font><a href="https://github.com/hazelcast/hazelcast-csharp-client"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.NET</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">、</font></font><a href="https://github.com/hazelcast/hazelcast-cpp-client"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">C++</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">和</font><a href="https://github.com/hazelcast/hazelcast-go-client"><font style="vertical-align: inherit;">Go</font></a><font style="vertical-align: inherit;">中的客户端库</font></font><a href="https://github.com/hazelcast/hazelcast-go-client"><font style="vertical-align: inherit;"></font></a></li>
+</ul>
+<h3 tabindex="-1" dir="auto"><a id="user-content-operational-data-store" class="anchor" aria-hidden="true" tabindex="-1" href="#operational-data-store"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">运营数据存储</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 提供可分区、可复制和可查询的分布式内存数据结构。</font><font style="vertical-align: inherit;">Hazelcast 的主要用例之一是存储一</font></font><em><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">组工作</font></font></em><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">数据以便快速查询和访问。</font></font></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 底层的主要数据结构称为</font></font><code>IMap</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，是一个键值存储，具有丰富的功能，包括：</font></font></p>
+<ul dir="auto">
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">与</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/pipelines/sources-sinks.htm" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">数据源</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+一次性集成或持续摄取</font></font></li>
+<li><a href="https://docs.hazelcast.com/hazelcast/latest/data-structures/map.html#loading-and-storing-persistent-data" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">直读和直写</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+缓存模式</font></font></li>
+<li><font style="vertical-align: inherit;"><a href="https://docs.hazelcast.com/hazelcast/latest/query/sql-overview.html" rel="nofollow"><font style="vertical-align: inherit;">通过SQL</font></a><font style="vertical-align: inherit;">建立索引和查询
+</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/query/sql-overview.html" rel="nofollow"><font style="vertical-align: inherit;"></font></a></li>
+<li><font style="vertical-align: inherit;"><a href="https://docs.hazelcast.com/hazelcast/latest/computing/entry-processor.html" rel="nofollow"><font style="vertical-align: inherit;">处理原子更新</font></a><font style="vertical-align: inherit;">的条目</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/computing/entry-processor.html" rel="nofollow"><font style="vertical-align: inherit;"></font></a></li>
+<li><a href="https://docs.hazelcast.com/hazelcast/latest/data-structures/map.html#map-eviction" rel="nofollow"><font style="vertical-align: inherit;"></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+根据 TTL 或上次访问时间等特定条件自动</font><a href="https://docs.hazelcast.com/hazelcast/latest/data-structures/map.html#map-eviction" rel="nofollow"><font style="vertical-align: inherit;">使项目过期</font></a></font></li>
+<li><a href="https://docs.hazelcast.com/hazelcast/latest/performance/near-cache.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">近端缓存</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+用于在客户端缓存条目</font></font></li>
+<li><a href="https://docs.hazelcast.com/hazelcast/latest/events/object-events.html" rel="nofollow"><font style="vertical-align: inherit;"></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+用于向客户端推送更改的</font><a href="https://docs.hazelcast.com/hazelcast/latest/events/object-events.html" rel="nofollow"><font style="vertical-align: inherit;">侦听器</font></a></font></li>
+<li><a href="https://docs.hazelcast.com/hazelcast/latest/wan/wan.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">数据中心之间的数据复制</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+（仅限企业版）</font></font></li>
+<li><a href="https://docs.hazelcast.com/hazelcast/latest/storage/persistence.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">磁盘上数据的持久性</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+（仅限企业版）</font></font></li>
+</ul>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 将数据存储在
+</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/consistency-and-replication/replication-algorithm.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">分区</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">中，这些分区分布到所有节点。</font><font style="vertical-align: inherit;">您可以通过添加额外的节点来增加存储容量，如果其中一个节点出现故障，数据会自动从备份副本中恢复。</font></font></p>
+<p dir="auto"><a target="_blank" rel="noopener noreferrer" href="/hazelcast/hazelcast/blob/master/images/replication.png"><img src="/hazelcast/hazelcast/raw/master/images/replication.png" style="max-width: 100%;"></a></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">您可以使用 SQL 或您选择的编程语言客户端与地图进行交互。</font><font style="vertical-align: inherit;">您可以按如下方式创建地图并与之交互：</font></font></p>
+<div class="highlight highlight-source-sql notranslate position-relative overflow-auto" dir="auto"><pre>CREATE MAPPING myMap (name <span class="pl-k">varchar</span> EXTERNAL NAME <span class="pl-s"><span class="pl-pds">"</span>__key<span class="pl-pds">"</span></span>, age <span class="pl-k">INT</span> EXTERNAL NAME <span class="pl-s"><span class="pl-pds">"</span>this<span class="pl-pds">"</span></span>) 
+TYPE IMap
+OPTIONS (<span class="pl-s"><span class="pl-pds">'</span>keyFormat<span class="pl-pds">'</span></span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>varchar<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>valueFormat<span class="pl-pds">'</span></span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>int<span class="pl-pds">'</span></span>);
+<span class="pl-k">INSERT INTO</span> myMap <span class="pl-k">VALUES</span>(<span class="pl-s"><span class="pl-pds">'</span>Jake<span class="pl-pds">'</span></span>, <span class="pl-c1">29</span>);
+<span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> myMap;</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="CREATE MAPPING myMap (name varchar EXTERNAL NAME &quot;__key&quot;, age INT EXTERNAL NAME &quot;this&quot;) 
 TYPE IMap
 OPTIONS ('keyFormat'='varchar','valueFormat'='int');
 INSERT INTO myMap VALUES('Jake', 29);
-SELECT * FROM myMap;
-```
+SELECT * FROM myMap;" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<p dir="auto"><font style="vertical-align: inherit;"></font><a href="https://docs.hazelcast.com/hazelcast/latest/clients/hazelcast-clients.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">可以使用受支持的编程语言</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">之一以编程方式完成相同的操作，如下所示</font><font style="vertical-align: inherit;">。</font><font style="vertical-align: inherit;">以下是 Java 和 Python 中的一些示例：</font></font></p>
+<div class="highlight highlight-source-java notranslate position-relative overflow-auto" dir="auto"><pre><span class="pl-smi">var</span> <span class="pl-s1">hz</span> = <span class="pl-smi">HazelcastClient</span>.<span class="pl-en">newHazelcastClient</span>();
+<span class="pl-smi">IMap</span>&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Integer</span>&gt; <span class="pl-s1">map</span> = <span class="pl-s1">hz</span>.<span class="pl-en">getMap</span>(<span class="pl-s">"myMap"</span>);
+<span class="pl-s1">map</span>.<span class="pl-en">set</span>(<span class="pl-s1">Alice</span>, <span class="pl-c1">25</span>);</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="var hz = HazelcastClient.newHazelcastClient();
+IMap<String, Integer> map = hz.getMap(&quot;myMap&quot;);
+map.set(Alice, 25);" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<div class="highlight highlight-source-python notranslate position-relative overflow-auto" dir="auto"><pre><span class="pl-k">import</span> <span class="pl-s1">hazelcast</span>
 
-The same can be done programmatically as follows using one of the [supported
-programming
-languages](https://docs.hazelcast.com/hazelcast/latest/clients/hazelcast-clients.html).
-Here are some exmaples in Java and Python:
-
-```java
-var hz = HazelcastClient.newHazelcastClient();
-IMap<String, Integer> map = hz.getMap("myMap");
-map.set(Alice, 25);
-```
-
-```python
-import hazelcast
+<span class="pl-s1">client</span> <span class="pl-c1">=</span> <span class="pl-s1">hazelcast</span>.<span class="pl-v">HazelcastClient</span>()
+<span class="pl-s1">my_map</span> <span class="pl-c1">=</span> <span class="pl-s1">client</span>.<span class="pl-en">get_map</span>(<span class="pl-s">"myMap"</span>)
+<span class="pl-s1">age</span> <span class="pl-c1">=</span> <span class="pl-s1">my_map</span>.<span class="pl-en">get</span>(<span class="pl-s">"Alice"</span>).<span class="pl-en">result</span>()</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="import hazelcast
 
 client = hazelcast.HazelcastClient()
-my_map = client.get_map("myMap")
-age = my_map.get("Alice").result()
-```
-
-Other programming languages supported are
-[C#](https://docs.hazelcast.com/hazelcast/latest/clients/dotnet.html),
-[C++](https://docs.hazelcast.com/hazelcast/latest/clients/cplusplus.html),
-[Node.js](https://docs.hazelcast.com/hazelcast/latest/clients/nodejs.html) and
-[Go](https://docs.hazelcast.com/hazelcast/latest/clients/go.html).
-
-Alternatively, you can ingest data directly from the many [sources supported](https://docs.hazelcast.com/hazelcast/latest/pipelines/sources-sinks.html)
-using SQL:
-
-```sql
-CREATE MAPPING csv_ages (name VARCHAR, age INT)
+my_map = client.get_map(&quot;myMap&quot;)
+age = my_map.get(&quot;Alice&quot;).result()" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">其他支持的编程语言有
+</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/clients/dotnet.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">C#</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">、
+ </font></font><a href="https://docs.hazelcast.com/hazelcast/latest/clients/cplusplus.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">C++</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">、
+ </font></font><a href="https://docs.hazelcast.com/hazelcast/latest/clients/nodejs.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Node.js</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">和
+</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/clients/go.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Go</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">或者，您可以使用 SQL 直接从支持的许多</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/pipelines/sources-sinks.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">源</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">获取数据
+：</font></font></p>
+<div class="highlight highlight-source-sql notranslate position-relative overflow-auto" dir="auto"><pre>CREATE MAPPING csv_ages (name <span class="pl-k">VARCHAR</span>, age <span class="pl-k">INT</span>)
+TYPE File
+OPTIONS (<span class="pl-s"><span class="pl-pds">'</span>format<span class="pl-pds">'</span></span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>csv<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>path<span class="pl-pds">'</span></span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>/data<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>glob<span class="pl-pds">'</span></span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>data.csv<span class="pl-pds">'</span></span>);
+SINK INTO myMap
+<span class="pl-k">SELECT</span> name, age <span class="pl-k">FROM</span> csv_ages;</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="CREATE MAPPING csv_ages (name VARCHAR, age INT)
 TYPE File
 OPTIONS ('format'='csv',
     'path'='/data', 'glob'='data.csv');
 SINK INTO myMap
-SELECT name, age FROM csv_ages;
-```
+SELECT name, age FROM csv_ages;" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 还提供了额外的数据结构，例如 ReplicatedMap、Set、MultiMap 和 List。</font><font style="vertical-align: inherit;">有关完整列表，请参阅</font><font style="vertical-align: inherit;">
+文档的</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/data-structures/distributed-data-structures.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">分布式数据结构部分。</font></font></a><font style="vertical-align: inherit;"></font></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-stateful-data-processing" class="anchor" aria-hidden="true" tabindex="-1" href="#stateful-data-processing"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">状态数据处理</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 有一个内置的数据处理引擎，称为
+</font></font><a href="https://arxiv.org/abs/2103.10169" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Jet</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font><font style="vertical-align: inherit;">Jet 可用于构建弹性的流式和批处理数据管道。</font><font style="vertical-align: inherit;">您可以使用它来处理大量实时事件或大批量静态数据集。</font><font style="vertical-align: inherit;">为了给人一种规模感，Hazelcast 的单个节点已被证明</font></font><a href="https://jet-start.sh/blog/2020/08/05/gc-tuning-for-jet" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">每秒聚合 1000 万个事件</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，延迟低于 10 毫秒。</font><font style="vertical-align: inherit;">Hazelcast 节点集群</font></font><a href="https://hazelcast.com/blog/billion-events-per-second-with-millisecond-latency-streaming-analytics-at-giga-scale/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">每秒可以处理十亿个事件</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+<p dir="auto"><a target="_blank" rel="noopener noreferrer" href="/hazelcast/hazelcast/blob/master/images/latency.png"><img src="/hazelcast/hazelcast/raw/master/images/latency.png" style="max-width: 100%;"></a></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">每秒从 Kafka 聚合数百万个传感器读数（分辨率为 10 毫秒）的应用程序如下所示：</font></font></p>
+<div class="highlight highlight-source-java notranslate position-relative overflow-auto" dir="auto"><pre><span class="pl-smi">var</span> <span class="pl-s1">hz</span> = <span class="pl-smi">Hazelcast</span>.<span class="pl-en">bootstrappedInstance</span>();
 
-Hazelcast also provides additional data structures such as ReplicatedMap, Set,
-MultiMap and List. For a full list, refer to the [distributed data
-structures](https://docs.hazelcast.com/hazelcast/latest/data-structures/distributed-data-structures.html)
-section of the docs.
+<span class="pl-smi">var</span> <span class="pl-s1">p</span> = <span class="pl-smi">Pipeline</span>.<span class="pl-en">create</span>();
 
-### Stateful Data Processing
+<span class="pl-s1">p</span>.<span class="pl-en">readFrom</span>(<span class="pl-smi">KafkaSources</span>.&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Reading</span>&gt;<span class="pl-en">kafka</span>(<span class="pl-s1">kafkaProperties</span>, <span class="pl-s">"sensors"</span>))
+ .<span class="pl-en">withTimestamps</span>(<span class="pl-s1">event</span> -&gt; <span class="pl-s1">event</span>.<span class="pl-en">getValue</span>().<span class="pl-en">timestamp</span>(), <span class="pl-c1">10</span>) <span class="pl-c">// use event timestamp, allowed lag in ms</span>
+ .<span class="pl-en">groupingKey</span>(<span class="pl-s1">reading</span> -&gt; <span class="pl-s1">reading</span>.<span class="pl-en">sensorId</span>())
+ .<span class="pl-en">window</span>(<span class="pl-en">sliding</span>(<span class="pl-c1">1_000</span>, <span class="pl-c1">10</span>)) <span class="pl-c">// sliding window of 1s by 10ms</span>
+ .<span class="pl-en">aggregate</span>(<span class="pl-en">averagingDouble</span>(<span class="pl-s1">reading</span> -&gt; <span class="pl-s1">reading</span>.<span class="pl-en">temperature</span>()))
+ .<span class="pl-en">writeTo</span>(<span class="pl-smi">Sinks</span>.<span class="pl-en">logger</span>());
 
-Hazelcast has a built-in data processing engine called
-[Jet](https://arxiv.org/abs/2103.10169). Jet can be used to build both streaming
-and batch data pipelines that are elastic. You can use it to process large
-volumes of real-time events or huge batches of static datasets. To give a sense
-of scale, a single node of Hazelcast has been proven to [aggregate 10 million
-events per second](https://jet-start.sh/blog/2020/08/05/gc-tuning-for-jet) with
-latency under 10 milliseconds. A cluster of Hazelcast nodes can process [billion
-events per
-second](https://hazelcast.com/blog/billion-events-per-second-with-millisecond-latency-streaming-analytics-at-giga-scale/).
-
-<img src="images/latency.png"/>
-
-An application which aggregates millions of sensor readings per
-second with 10-millisecond resolution from Kafka looks like the
-following:
-
-```java
-var hz = Hazelcast.bootstrappedInstance();
+<span class="pl-s1">hz</span>.<span class="pl-en">getJet</span>().<span class="pl-en">newJob</span>(<span class="pl-s1">p</span>).<span class="pl-en">join</span>();</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="var hz = Hazelcast.bootstrappedInstance();
 
 var p = Pipeline.create();
 
-p.readFrom(KafkaSources.<String, Reading>kafka(kafkaProperties, "sensors"))
+p.readFrom(KafkaSources.<String, Reading>kafka(kafkaProperties, &quot;sensors&quot;))
  .withTimestamps(event -> event.getValue().timestamp(), 10) // use event timestamp, allowed lag in ms
  .groupingKey(reading -> reading.sensorId())
  .window(sliding(1_000, 10)) // sliding window of 1s by 10ms
  .aggregate(averagingDouble(reading -> reading.temperature()))
  .writeTo(Sinks.logger());
 
-hz.getJet().newJob(p).join();
-```
-
-Use the following command to deploy the application to the server:
-
-```bash
-bin/hazelcast submit analyze-sensors.jar
-```
-
-Jet supports advanced streaming features such as [exactly-once processing](https://docs.hazelcast.com/hazelcast/latest/fault-tolerance/fault-tolerance.html) and
-[watermarks](https://docs.hazelcast.com/hazelcast/latest/architecture/event-time-processing.html).
-
-#### Data Processing using SQL
-
-Jet also powers the [SQL engine](https://docs.hazelcast.com/hazelcast/latest/query/sql-overview.html)
-in Hazelcast which can execute both streaming and batch queries. Internally, all SQL queries
-are converted to Jet jobs.
-
-```sql
-CREATE MAPPING trades (
+hz.getJet().newJob(p).join();" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">使用以下命令将应用程序部署到服务器：</font></font></p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto"><pre>bin/hazelcast submit analyze-sensors.jar</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="bin/hazelcast submit analyze-sensors.jar" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Jet 支持高级流媒体功能，例如</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/fault-tolerance/fault-tolerance.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">一次性处理</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">和
+</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/architecture/event-time-processing.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">水印</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+<h4 tabindex="-1" dir="auto"><a id="user-content-data-processing-using-sql" class="anchor" aria-hidden="true" tabindex="-1" href="#data-processing-using-sql"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">使用 SQL 进行数据处理</font></font></h4>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Jet 还为Hazelcast 中的</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/query/sql-overview.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SQL 引擎</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">提供支持
+，该引擎可以执行流式和批处理查询。</font><font style="vertical-align: inherit;">在内部，所有 SQL 查询都转换为 Jet 作业。</font></font></p>
+<div class="highlight highlight-source-sql notranslate position-relative overflow-auto" dir="auto"><pre>CREATE MAPPING trades (
+    id <span class="pl-k">BIGINT</span>,
+    ticker <span class="pl-k">VARCHAR</span>,
+    price <span class="pl-k">DECIMAL</span>,
+    amount <span class="pl-k">BIGINT</span>)
+TYPE Kafka
+OPTIONS (
+    <span class="pl-s"><span class="pl-pds">'</span>valueFormat<span class="pl-pds">'</span></span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>json<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>bootstrap.servers<span class="pl-pds">'</span></span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>kafka:9092<span class="pl-pds">'</span></span>
+);
+<span class="pl-k">SELECT</span> ticker, ROUND(price <span class="pl-k">*</span> <span class="pl-c1">100</span>) <span class="pl-k">AS</span> price_cents, amount
+  <span class="pl-k">FROM</span> trades
+  <span class="pl-k">WHERE</span> price <span class="pl-k">*</span> amount <span class="pl-k">&gt;</span> <span class="pl-c1">100</span>;
+<span class="pl-k">+</span><span class="pl-c"><span class="pl-c">--</span>----------+----------------------+-------------------+</span>
+|ticker      |           price_cents|             amount|
+<span class="pl-k">+</span><span class="pl-c"><span class="pl-c">--</span>----------+----------------------+-------------------+</span>
+|EFGH        |                  <span class="pl-c1">1400</span>|                 <span class="pl-c1">20</span>|</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="CREATE MAPPING trades (
     id BIGINT,
     ticker VARCHAR,
     price DECIMAL,
@@ -213,189 +228,177 @@ SELECT ticker, ROUND(price * 100) AS price_cents, amount
 +------------+----------------------+-------------------+
 |ticker      |           price_cents|             amount|
 +------------+----------------------+-------------------+
-|EFGH        |                  1400|                 20|
-```
-
-### Messaging
-
-Hazelcast provides lightweight options for adding messaging to your application.
-The two main constructs for messaging are topics and queues.
-
-#### Topics
-
-Topics provide a publish-subscribe pattern where each message is fanned out to
-multiple subscribers. See the examples below in Java and Python:
-
-```java
-var hz = Hazelcast.bootstrappedInstance();
-ITopic<String> topic = hz.getTopic("my_topic");
+|EFGH        |                  1400|                 20|" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<h3 tabindex="-1" dir="auto"><a id="user-content-messaging" class="anchor" aria-hidden="true" tabindex="-1" href="#messaging"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">消息传递</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 提供了向应用程序添加消息传递的轻量级选项。</font><font style="vertical-align: inherit;">消息传递的两个主要结构是主题和队列。</font></font></p>
+<h4 tabindex="-1" dir="auto"><a id="user-content-topics" class="anchor" aria-hidden="true" tabindex="-1" href="#topics"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">主题</font></font></h4>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">主题提供了发布-订阅模式，其中每条消息都分发给多个订阅者。</font><font style="vertical-align: inherit;">请参阅下面的 Java 和 Python 示例：</font></font></p>
+<div class="highlight highlight-source-java notranslate position-relative overflow-auto" dir="auto"><pre><span class="pl-smi">var</span> <span class="pl-s1">hz</span> = <span class="pl-smi">Hazelcast</span>.<span class="pl-en">bootstrappedInstance</span>();
+<span class="pl-smi">ITopic</span>&lt;<span class="pl-smi">String</span>&gt; <span class="pl-s1">topic</span> = <span class="pl-s1">hz</span>.<span class="pl-en">getTopic</span>(<span class="pl-s">"my_topic"</span>);
+<span class="pl-s1">topic</span>.<span class="pl-en">addMessageListener</span>(<span class="pl-s1">msg</span> -&gt; <span class="pl-smi">System</span>.<span class="pl-s1">out</span>.<span class="pl-en">println</span>(<span class="pl-s1">msg</span>));
+<span class="pl-s1">topic</span>.<span class="pl-en">publish</span>(<span class="pl-s">"message"</span>);</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="var hz = Hazelcast.bootstrappedInstance();
+ITopic<String> topic = hz.getTopic(&quot;my_topic&quot;);
 topic.addMessageListener(msg -> System.out.println(msg));
-topic.publish("message");
-```
+topic.publish(&quot;message&quot;);" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<div class="highlight highlight-source-python notranslate position-relative overflow-auto" dir="auto"><pre><span class="pl-s1">topic</span> <span class="pl-c1">=</span> <span class="pl-s1">client</span>.<span class="pl-en">get_topic</span>(<span class="pl-s">"my_topic"</span>)
 
-```python
-topic = client.get_topic("my_topic")
+<span class="pl-k">def</span> <span class="pl-en">handle_message</span>(<span class="pl-s1">msg</span>):
+    <span class="pl-en">print</span>(<span class="pl-s">"Received message %s"</span>  <span class="pl-c1">%</span> <span class="pl-s1">msg</span>.<span class="pl-s1">message</span>)
+<span class="pl-s1">topic</span>.<span class="pl-en">add_listener</span>(<span class="pl-s1">on_message</span><span class="pl-c1">=</span><span class="pl-s1">handle_message</span>)
+<span class="pl-s1">topic</span>.<span class="pl-en">publish</span>(<span class="pl-s">"my-message"</span>)</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="topic = client.get_topic(&quot;my_topic&quot;)
 
 def handle_message(msg):
-    print("Received message %s"  % msg.message)
+    print(&quot;Received message %s&quot;  % msg.message)
 topic.add_listener(on_message=handle_message)
-topic.publish("my-message")
-```
+topic.publish(&quot;my-message&quot;)" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">有关其他语言的示例，请参阅</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/data-structures/topic.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">文档</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+<h4 tabindex="-1" dir="auto"><a id="user-content-queues" class="anchor" aria-hidden="true" tabindex="-1" href="#queues"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">队列</font></font></h4>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">队列提供 FIFO 语义，您可以从一个客户端添加项目并从另一个客户端删除项目。</font><font style="vertical-align: inherit;">请参阅下面的 Java 和 Python 示例：</font></font></p>
+<div class="highlight highlight-source-java notranslate position-relative overflow-auto" dir="auto"><pre><span class="pl-smi">var</span> <span class="pl-s1">client</span> = <span class="pl-smi">Hazelcast</span>.<span class="pl-en">newHazelcastClient</span>();
+<span class="pl-smi">IQueue</span>&lt;<span class="pl-smi">String</span>&gt; <span class="pl-s1">queue</span> = <span class="pl-s1">client</span>.<span class="pl-en">getQueue</span>(<span class="pl-s">"my_queue"</span>);
+<span class="pl-s1">queue</span>.<span class="pl-en">put</span>(<span class="pl-s">"new-item"</span>)</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="var client = Hazelcast.newHazelcastClient();
+IQueue<String> queue = client.getQueue(&quot;my_queue&quot;);
+queue.put(&quot;new-item&quot;)" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<div class="highlight highlight-source-python notranslate position-relative overflow-auto" dir="auto"><pre><span class="pl-k">import</span> <span class="pl-s1">hazelcast</span>
 
-For examples in other languages, please refer to the [docs](https://docs.hazelcast.com/hazelcast/latest/data-structures/topic.html).
-
-#### Queues
-
-Queues provide FIFO-semantics and you can add items from one client and remove
-from another. See the examples below in Java and Python:
-
-```java
-var client = Hazelcast.newHazelcastClient();
-IQueue<String> queue = client.getQueue("my_queue");
-queue.put("new-item")
-```
-
-```python
-import hazelcast
+<span class="pl-s1">client</span> <span class="pl-c1">=</span> <span class="pl-s1">hazelcast</span>.<span class="pl-v">HazelcastClient</span>()
+<span class="pl-s1">q</span> <span class="pl-c1">=</span> <span class="pl-s1">client</span>.<span class="pl-en">get_queue</span>(<span class="pl-s">"my_queue"</span>)
+<span class="pl-s1">my_item</span> <span class="pl-c1">=</span> <span class="pl-s1">q</span>.<span class="pl-en">take</span>().<span class="pl-en">result</span>()
+<span class="pl-en">print</span>(<span class="pl-s">"Received item %s"</span> <span class="pl-c1">%</span> <span class="pl-s1">my_item</span>)</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="import hazelcast
 
 client = hazelcast.HazelcastClient()
-q = client.get_queue("my_queue")
+q = client.get_queue(&quot;my_queue&quot;)
 my_item = q.take().result()
-print("Received item %s" % my_item)
-```
-
-For examples in other languages, please refer to the [docs](https://docs.hazelcast.com/hazelcast/latest/data-structures/queue.html).
-
-## Get Started
-
-Follow the [Getting Started
-Guide](https://docs.hazelcast.com/hazelcast/latest/getting-started/install-hazelcast)
-to install and start using Hazelcast.
-
-## Documentation
-
-Read the [documentation](https://docs.hazelcast.com/) for
-in-depth details about how to install Hazelcast and an overview of the features.
-
-## Get Help
-
-You can use the following channels for getting help with Hazelcast:
-
-* [Hazelcast mailing list](http://groups.google.com/group/hazelcast)
-* [Slack](https://slack.hazelcast.com/) for chatting with the
-  development team and other Hazelcast users.
-* [Stack Overflow](https://stackoverflow.com/tags/hazelcast)
-
-## How to Contribute
-
-Thanks for your interest in contributing! The easiest way is to just send a pull
-request. Have a look at the
-[issues](https://github.com/hazelcast/hazelcast-jet/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
-marked as good first issue for some guidance.
-
-### Building From Source
-
-Building Hazelcast requires at minimum JDK 11. Pull the latest source from the
-repository and use Maven install (or package) to build:
-
-```bash
-$ git pull origin master
-$ ./mvnw clean package -DskipTests
-```
-
-It is recommended to use the included Maven wrapper script.
-It is also possible to use local Maven distribution with the same 
-version that is used in the Maven wrapper script.
-
-Additionally, there is a `quick` build activated by setting the `-Dquick` system
-property that skips tests, checkstyle validation, javadoc and source plugins and
-does not build `extensions` and `distribution` modules.
-
-### Testing
-
-Take into account that the default build executes thousands of tests which may
-take a considerable amount of time. Hazelcast has 3 testing profiles:
-
-* Default: Type `./mvnw test` to run quick/integration tests (those can be run
-  in parallel without using network by using `-P parallelTest` profile).
-* Slow Tests: Type `./mvnw test -P nightly-build` to run tests that are either slow
-  or cannot be run in parallel.
-* All Tests: Type `./mvnw test -P all-tests` to run all tests serially using
-  network.
-
-Some tests require Docker to run. Set `-Dhazelcast.disable.docker.tests` system property to ignore them.
-
-When developing a PR it is sufficient to run your new tests and some 
-related subset of tests locally. Our PR builder will take care of running
-the full test suite.
-
-## Trigger Phrases in the Pull Request Conversation
-
-When you create a pull request (PR), it must pass a build-and-test
-procedure. Maintainers will be notified about your PR, and they can
-trigger the build using special comments. These are the phrases you may
-see used in the comments on your PR:
-
-* `run-lab-run` - run the default PR builder
-* `run-lts-compilers` - compiles the sources with JDK 11 and JDK 17 (without running tests)
-* `run-ee-compile` - compile hazelcast-enterprise with this PR
-* `run-ee-tests` - run tests from hazelcast-enterprise with this PR
-* `run-windows` - run the tests on a Windows machine (HighFive is not supported here)
-* `run-with-jdk17` - run the tests with JDK 17
-* `run-with-ibm-jdk-8` - run the tests with IBM JDK 8
-* `run-cdc-debezium-tests` - run all tests in the
-  `extensions/cdc-debezium` module
-* `run-cdc-mysql-tests` - run all tests in the `extensions/cdc-mysql`
-  module
-* `run-cdc-postgres-tests` - run all tests in the
-  `extensions/cdc-postgres` module
-* `run-mongodb-tests` - run all tests in the `extensions/mongodb` module
-* `run-s3-tests` - run all tests in the `extensions/s3` module
-* *`run-nightly-tests` - run nightly (slow) tests. WARNING: Use with care as this is a resource consuming task.*
-* *`run-ee-nightly-tests` - run nightly (slow) tests from hazelcast-enterprise. WARNING: Use with care as this is a resource consuming task.*
-* `run-sql-only` - run default tests in `hazelcast-sql`, `hazelcast-distribution`, and `extensions/mapstore` modules
-* `run-docs-only` - do not run any tests, check that only files with `.md`, `.adoc` or `.txt` suffix are added in the PR
-* `run-sonar` - run SonarCloud analysis
-* `run-arm64` - run the tests on arm64 machine
-
-Where not indicated, the builds run on a Linux machine with Oracle JDK 11.
-
-### Creating PRs for Hazelcast SQL
-
-When creating a PR with changes located in the `hazelcast-sql` module and nowhere else,
-you can label your PR with `SQL-only`. This will change the standard PR builder to one that
-will only run tests related to SQL (see `run-sql-only` above), which will significantly shorten
-the build time vs. the default PR builder. **NOTE**: this job will fail if you've made changes
-anywhere other than `hazelcast-sql`.
-
-### Creating PRs which contain only documentation
-
-When creating a PR which changes only documentation (files with suffix `.md` or `.adoc`) it 
-makes no sense to run tests. For that case the label `docs-only` can be used. The job will fail 
-in case you've made other changes than in `.md`, `.adoc` or `.txt` files.
-
-## License
-
-Source code in this repository is covered by one of two licenses:
-
- 1. [Apache License 2.0](https://docs.hazelcast.com/hazelcast/latest/index.html#licenses-and-support)
- 2. [Hazelcast Community
-    License](http://hazelcast.com/hazelcast-community-license)
-
-The default license throughout the repository is Apache License 2.0 unless the
-header specifies another license.
-
-## Acknowledgments
-[![](https://www.yourkit.com/images/yklogo.png)](http://www.yourkit.com/)
-
-Thanks to [YourKit](http://www.yourkit.com/) for supporting open source software
-by providing us a free license for their Java profiler.
-
-We owe (the good parts of) our CLI tool's user experience to
-[picocli](https://picocli.info/).
-
-## Copyright
-
-Copyright (c) 2008-2024, Hazelcast, Inc. All Rights Reserved.
-
-Visit [www.hazelcast.com](http://www.hazelcast.com/) for more info.
+print(&quot;Received item %s&quot; % my_item)" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">有关其他语言的示例，请参阅</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/data-structures/queue.html" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">文档</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+<h2 tabindex="-1" dir="auto"><a id="user-content-get-started" class="anchor" aria-hidden="true" tabindex="-1" href="#get-started"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">开始使用</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">按照</font></font><a href="https://docs.hazelcast.com/hazelcast/latest/getting-started/install-hazelcast" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">入门指南</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+安装并开始使用 Hazelcast。</font></font></p>
+<h2 tabindex="-1" dir="auto"><a id="user-content-documentation" class="anchor" aria-hidden="true" tabindex="-1" href="#documentation"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">文档</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">阅读</font></font><a href="https://docs.hazelcast.com/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">文档</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，了解有关如何安装 Hazelcast 的详细信息以及功能概述。</font></font></p>
+<h2 tabindex="-1" dir="auto"><a id="user-content-get-help" class="anchor" aria-hidden="true" tabindex="-1" href="#get-help"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">得到帮助</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">您可以使用以下渠道获取 Hazelcast 的帮助：</font></font></p>
+<ul dir="auto">
+<li><a href="http://groups.google.com/group/hazelcast" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 邮件列表</font></font></a></li>
+<li><a href="https://slack.hazelcast.com/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Slack</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">用于与开发团队和其他 Hazelcast 用户聊天。</font></font></li>
+<li><a href="https://stackoverflow.com/tags/hazelcast" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">堆栈溢出</font></font></a></li>
+</ul>
+<h2 tabindex="-1" dir="auto"><a id="user-content-how-to-contribute" class="anchor" aria-hidden="true" tabindex="-1" href="#how-to-contribute"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">如何贡献</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">感谢您有兴趣贡献！</font><font style="vertical-align: inherit;">最简单的方法是发送拉取请求。</font><font style="vertical-align: inherit;">查看
+标记为好第一期的</font></font><a href="https://github.com/hazelcast/hazelcast-jet/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">问题</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+以获得一些指导。</font></font></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-building-from-source" class="anchor" aria-hidden="true" tabindex="-1" href="#building-from-source"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">从源头构建</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">构建 Hazelcast 至少需要 JDK 11。从存储库中提取最新源并使用 Maven 安装（或打包）来构建：</font></font></p>
+<div class="highlight highlight-source-shell notranslate position-relative overflow-auto" dir="auto"><pre>$ git pull origin master
+$ ./mvnw clean package -DskipTests</pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="$ git pull origin master
+$ ./mvnw clean package -DskipTests" tabindex="0" role="button">
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
+    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
+</svg>
+      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
+    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
+</svg>
+    </clipboard-copy>
+  </div></div>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">建议使用附带的 Maven 包装器脚本。</font><font style="vertical-align: inherit;">还可以使用与 Maven 包装器脚本中使用的版本相同的本地 Maven 发行版。</font></font></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">此外，还有一个</font></font><code>quick</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">通过设置</font></font><code>-Dquick</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">系统属性激活的构建，该属性会跳过测试、checkstyle 验证、javadoc 和源插件，并且不会构建</font></font><code>extensions</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">和</font></font><code>distribution</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">模块。</font></font></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-testing" class="anchor" aria-hidden="true" tabindex="-1" href="#testing"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">测试</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">请考虑到默认构建会执行数千个测试，这可能需要相当长的时间。</font><font style="vertical-align: inherit;">Hazelcast 有 3 个测试配置文件：</font></font></p>
+<ul dir="auto">
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">默认值：键入</font></font><code>./mvnw test</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">以运行快速/集成测试（这些测试可以通过使用配置文件在不使用网络的情况下并行运行</font></font><code>-P parallelTest</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">）。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">慢速测试：键入</font></font><code>./mvnw test -P nightly-build</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">运行速度慢或无法并行运行的测试。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">所有测试：键入</font></font><code>./mvnw test -P all-tests</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">以使用网络串行运行所有测试。</font></font></li>
+</ul>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">一些测试需要 Docker 来运行。</font><font style="vertical-align: inherit;">设置</font></font><code>-Dhazelcast.disable.docker.tests</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">系统属性以忽略它们。</font></font></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">开发 PR 时，在本地运行新测试和一些相关的测试子集就足够了。</font><font style="vertical-align: inherit;">我们的 PR 构建者将负责运行完整的测试套件。</font></font></p>
+<h2 tabindex="-1" dir="auto"><a id="user-content-trigger-phrases-in-the-pull-request-conversation" class="anchor" aria-hidden="true" tabindex="-1" href="#trigger-phrases-in-the-pull-request-conversation"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">拉取请求对话中的触发短语</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">当您创建拉取请求 (PR) 时，它必须通过构建和测试过程。</font><font style="vertical-align: inherit;">维护人员将收到有关您的 PR 的通知，他们可以使用特殊评论触发构建。</font><font style="vertical-align: inherit;">这些是您可能会在 PR 评论中看到的短语：</font></font></p>
+<ul dir="auto">
+<li><code>run-lab-run</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 运行默认的 PR 构建器</font></font></li>
+<li><code>run-lts-compilers</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 使用 JDK 11 和 JDK 17 编译源代码（不运行测试）</font></font></li>
+<li><code>run-ee-compile</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 使用此 PR 编译 hazelcast-enterprise</font></font></li>
+<li><code>run-ee-tests</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 使用此 PR 从 hazelcast-enterprise 运行测试</font></font></li>
+<li><code>run-windows</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 在 Windows 机器上运行测试（此处不支持 HighFive）</font></font></li>
+<li><code>run-with-jdk17</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 使用 JDK 17 运行测试</font></font></li>
+<li><code>run-with-ibm-jdk-8</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 使用 IBM JDK 8 运行测试</font></font></li>
+<li><code>run-cdc-debezium-tests</code><font style="vertical-align: inherit;"></font><code>extensions/cdc-debezium</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 运行模块</font><font style="vertical-align: inherit;">中的所有测试
+</font></font></li>
+<li><code>run-cdc-mysql-tests</code><font style="vertical-align: inherit;"></font><code>extensions/cdc-mysql</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+- 运行模块</font><font style="vertical-align: inherit;">中的所有测试</font></font></li>
+<li><code>run-cdc-postgres-tests</code><font style="vertical-align: inherit;"></font><code>extensions/cdc-postgres</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 运行模块</font><font style="vertical-align: inherit;">中的所有测试
+</font></font></li>
+<li><code>run-mongodb-tests</code><font style="vertical-align: inherit;"></font><code>extensions/mongodb</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 运行模块</font><font style="vertical-align: inherit;">中的所有测试</font></font></li>
+<li><code>run-s3-tests</code><font style="vertical-align: inherit;"></font><code>extensions/s3</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 运行模块</font><font style="vertical-align: inherit;">中的所有测试</font></font></li>
+<li><em><code>run-nightly-tests</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 每晚运行（慢速）测试。</font><font style="vertical-align: inherit;">警告：请小心使用，因为这是一项消耗资源的任务。</font></font></em></li>
+<li><em><code>run-ee-nightly-tests</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 从 hazelcast-enterprise 每晚运行（慢速）测试。</font><font style="vertical-align: inherit;">警告：请小心使用，因为这是一项消耗资源的任务。</font></font></em></li>
+<li><code>run-sql-only</code><font style="vertical-align: inherit;"></font><code>hazelcast-sql</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 在、</font></font><code>hazelcast-distribution</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">和</font></font><code>extensions/mapstore</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">模块</font><font style="vertical-align: inherit;">中运行默认测试</font></font></li>
+<li><code>run-docs-only</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 不运行任何测试，检查</font><font style="vertical-align: inherit;">PR 中是否仅添加带有</font></font><code>.md</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">,</font></font><code>.adoc</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">或后缀的文件</font></font><code>.txt</code><font style="vertical-align: inherit;"></font></li>
+<li><code>run-sonar</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 运行 SonarCloud 分析</font></font></li>
+<li><code>run-arm64</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">- 在arm64机器上运行测试</font></font></li>
+</ul>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">如果未指明，则构建在具有 Oracle JDK 11 的 Linux 计算机上运行。</font></font></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-creating-prs-for-hazelcast-sql" class="anchor" aria-hidden="true" tabindex="-1" href="#creating-prs-for-hazelcast-sql"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">为 Hazelcast SQL 创建 PR</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">当创建包含位于模块中而不是其他地方的更改的 PR 时</font></font><code>hazelcast-sql</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，您可以使用 来标记您的 PR </font></font><code>SQL-only</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font><font style="vertical-align: inherit;">这会将标准 PR 构建器更改为仅运行与 SQL 相关的测试的构建器（见</font></font><code>run-sql-only</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">上文），与默认 PR 构建器相比，这将显着缩短构建时间。</font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">注意</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">：如果您在</font></font><code>hazelcast-sql</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-creating-prs-which-contain-only-documentation" class="anchor" aria-hidden="true" tabindex="-1" href="#creating-prs-which-contain-only-documentation"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">创建仅包含文档的 PR</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"></font><code>.md</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">当创建仅更改文档（带有后缀或 的</font><font style="vertical-align: inherit;">文件）的 PR 时，</font></font><code>.adoc</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">运行测试是没有意义的。</font></font><code>docs-only</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">对于这种情况，可以使用</font><font style="vertical-align: inherit;">标签。</font><font style="vertical-align: inherit;">如果您在</font></font><code>.md</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">、</font></font><code>.adoc</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">或</font></font><code>.txt</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">文件中进行了其他更改，则作业将会失败。</font></font></p>
+<h2 tabindex="-1" dir="auto"><a id="user-content-license" class="anchor" aria-hidden="true" tabindex="-1" href="#license"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">执照</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">此存储库中的源代码受以下两个许可证之一的保护：</font></font></p>
+<ol dir="auto">
+<li><a href="https://docs.hazelcast.com/hazelcast/latest/index.html#licenses-and-support" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">阿帕奇许可证 2.0</font></font></a></li>
+<li><a href="http://hazelcast.com/hazelcast-community-license" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Hazelcast 社区许可证</font></font></a></li>
+</ol>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">整个存储库的默认许可证是 Apache License 2.0，除非标头指定了另一个许可证。</font></font></p>
+<h2 tabindex="-1" dir="auto"><a id="user-content-acknowledgments" class="anchor" aria-hidden="true" tabindex="-1" href="#acknowledgments"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">致谢</font></font></h2>
+<p dir="auto"><a href="http://www.yourkit.com/" rel="nofollow"><img src="https://camo.githubusercontent.com/2b1fd3407c9b019211acd8990647e37624d48818b6b39e33fe7f5fd46d573970/68747470733a2f2f7777772e796f75726b69742e636f6d2f696d616765732f796b6c6f676f2e706e67" alt="" data-canonical-src="https://www.yourkit.com/images/yklogo.png" style="max-width: 100%;"></a></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">感谢</font></font><a href="http://www.yourkit.com/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">YourKit</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">支持开源软件，为我们提供了 Java 分析器的免费许可证。</font></font></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">我们将 CLI 工具的用户体验（良好的部分）归功于
+</font></font><a href="https://picocli.info/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">picocli</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+<h2 tabindex="-1" dir="auto"><a id="user-content-copyright" class="anchor" aria-hidden="true" tabindex="-1" href="#copyright"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">版权</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">版权所有 (c) 2008-2024，Hazelcast, Inc。保留所有权利。</font></font></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">请访问</font></font><a href="http://www.hazelcast.com/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">www.hazelcast.com</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">了解更多信息。</font></font></p>
+</article></div>
